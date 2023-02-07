@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="requisition_report" model="ir.actions.report">
+        <field name="name">Print Requisition Details</field>
+        <field name="model">purchase.requisitions</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">purchase_requisitions.print_purchase_requisition</field>
+        <field name="report_file">purchase_requisitions.print_purchase_requisition</field>
+        <field name="binding_model_id" ref="model_purchase_requisitions"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="pro_req1_tree" model="ir.ui.view">
+        <field name="name">product.requisition.tree</field>
+        <field name="model">purchase.requisitions</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ref" string="Reference"/>
+                <field name="employee"/>
+                <field name="department"/>
+                <field name="requi_resp"/>
+                <field name="requi_date"/>
+                <field name="recived_date"/>
+                <field name="requi_deadline"/>
+                <field name="company"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="pro_req1_form" model="ir.ui.view">
+        <field name="name">product.requisition.form</field>
+        <field name="model">purchase.requisitions</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="state_approval" string="Approve" class="btn-primary ml4"
+                            type="object"
+                            attrs="{'invisible': [('state','in',['new','waiting department approval','approved','purchase order created','received','cancel','rejected'])]}"
+                            groups="purchase_requisitions.group_user1"/>
+                    <button name="state_confirm" string="Confirm" class="btn-primary ml4" type="object"
+                            attrs="{'invisible': [('state','in',['waiting department approval','waiting ir approval','approved','purchase order created','received'])]}"
+                            groups="purchase_requisitions.group_employee1"/>
+                    <field name="state" widget="statusbar"/>
+                    <button name="state_cancel" string="Cancel" class=" ml4" type="object"
+                            groups="purchase_requisitions.group_employee1"
+                    />
+                    <button name="state_department_approval" string="Department Approval" class="btn-primary ml4"
+                            type="object"
+                            attrs="{'invisible': [('state','in',['new','waiting ir approval','approved','purchase order created','received','cancel','rejected'])]}"
+                            groups="purchase_requisitions.group_manager1"/>
+                    <button name="state_reject" string="Reject" class=" ml4"
+                            type="object"
+                            attrs="{'invisible': [('state','in',['new','approved','purchase order created','received','cancel'])]}"
+                            groups="purchase_requisitions.group_manager1"/>
+
+                    <button name="create_po" string="Create Purchase Order" class=" ml4"
+                            type="object"
+                            attrs="{'invisible': [('state','in',['new','waiting department approval','waiting ir approval','purchase order created','received','cancel'])]}"
+                            groups="purchase_requisitions.group_user1"/>
+                    <button name="state_received" string="Received" class=" ml4"
+                            type="object"
+                            attrs="{'invisible': [('state','in',['new','waiting department approval','waiting ir approval','received','rejected','cancel'])]}"
+                            groups="purchase_requisitions.group_user1"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box"
+                         groups="purchase_requisitions.group_manager1,purchase_requisitions.group_user1">
+                        <button class="oe_stat_button" type="object" name="get_vehicles"
+                                icon="fa-shopping-cart">
+                            <field string="Purchase Order" name="purchase_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="employee"/>
+                                <field name="department"/>
+                                <field name="requi_resp" options="{'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="requi_date"/>
+                                <field name="recived_date"/>
+                                <field name="requi_deadline"/>
+                                <field name="company"/>
+                            </group>
+                        </group>
+                    </div>
+                    <notebook>
+                        <page string="Requisition Line">
+                            <field name="purchase_line_ids" attrs="{'readonly':[('state','=','received')]}">
+                                <tree editable="top">
+                                    <field name="requisition_action"
+                                           groups="purchase_requisitions.group_manager1,purchase_requisitions.group_user1"/>
+                                    <field name="order_line"/>
+                                    <field name="name"/>
+                                    <field name="product_qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="vendor_id" widget="many2many_tags"
+                                           groups="purchase_requisitions.group_manager1,purchase_requisitions.group_user1"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                        <page string="Other Information">
+                            <group>
+                                <group>
+                                    <field name="confirmed_by"/>
+                                    <field name="department_mng"/>
+                                    <field name="approved_by"/>
+                                    <field name="rejected_by"/>
+                                </group>
+                                <group>
+                                    <field name="confirmed_dt"/>
+                                    <field name="department_mng_dt"/>
+                                    <field name="approved_dt"/>
+                                    <field name="rejected_dt"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_form" model="ir.ui.view">
+        <field name="name">view.requisition.hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook>
+                <page string="Requisition Setting">
+                    <group>
+                        <field name="destination_lo" string="Destination Location"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="view_hr_department_form" model="ir.ui.view">
+        <field name="name">view.requisition.hr.department.form</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+
+                <field name="destination_location" string="Destination Location"/>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="pro_req1_action" model="ir.actions.act_window">
+        <field name="name">Purchase Requisition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.requisitions</field>
+        <field name="view_mode">tree,form,search</field>
+        <field name="help" type="html">
+            <p class="sale3_view">Create your Purchase requisitions</p>
+        </field>
+    </record>
+    <menuitem id="req1_root" name="Purchase Requisition" sequence="10"
+              web_icon="purchase_requisitions,static/description/3718757@0.jpg"/>
+    <menuitem id="req1_root1" name="Purchase Requisition" parent="req1_root" action="pro_req1_action" sequence="10"/>
+</odoo>

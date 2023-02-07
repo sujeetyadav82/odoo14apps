@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_purchase_requisition">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <div class="page">
+
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <br/>
+                            <center>
+                                <h2>
+                                    <b>Purchase Requisition
+                                        <span t-field="o.ref"/>
+                                    </b>
+                                </h2>
+                            </center>
+                            <br/>
+                            <table class="table table-condensed" style="border: 3px solid black !important;">
+                                <tr>
+                                    <th>Employee</th>
+                                    <td>
+                                        <span t-field="o.employee"/>
+                                    </td>
+                                    <th>Requisition Date</th>
+                                    <td>
+                                        <span t-field="o.requi_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Department
+                                    </th>
+                                    <td>
+                                        <span t-field="o.department"/>
+                                    </td>
+                                    <th>Received Date</th>
+                                    <td>
+                                        <span t-field="o.recived_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Requisition Responsible</th>
+                                    <td>
+                                        <span t-field="o.requi_resp"/>
+                                    </td>
+                                    <th>Requisition Deadline</th>
+                                    <td>
+                                        <span t-field="o.requi_deadline"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Company</th>
+                                    <td>
+                                        <span t-field="o.company"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <h2>Requisition Line</h2>
+                            <table class="table table-condensed" style="border: 3px solid black !important;">
+                                <thead>
+                                    <tr>
+                                        <h6>
+                                            <b>
+                                                <th>Requisition Action</th>
+                                                <th>Product</th>
+                                                <th>Description</th>
+                                                <th>Quantity</th>
+                                                <th>Unit of Measure</th>
+                                                <th>Vendor</th>
+                                            </b>
+                                        </h6>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.purchase_line_ids" t-as="rec">
+                                        <div >
+                                            <tr>
+                                                <td>
+                                                    <span t-field="rec.requisition_action"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="rec.order_line"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="rec.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="rec.product_qty"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="rec.uom_id"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="rec.vendor_id"/>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <h2>Other Information</h2>
+                            <table class="table table-condensed" style="border: 3px solid black !important;">
+                                <tr>
+                                    <th>Confirmed By</th>
+                                    <td>
+                                        <span t-field="o.confirmed_by"/>
+                                    </td>
+                                    <th>Confirmed Date</th>
+                                    <td>
+                                        <span t-field="o.confirmed_dt"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Department Manager
+                                    </th>
+                                    <td>
+                                        <span t-field="o.department_mng"/>
+                                    </td>
+                                    <th>Department Manager Approval Date</th>
+                                    <td>
+                                        <span t-field="o.department_mng_dt"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Approved By</th>
+                                    <td>
+                                        <span t-field="o.approved_by"/>
+                                    </td>
+                                    <th>Approved Date</th>
+                                    <td>
+                                        <span t-field="o.approved_dt"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Rejected By
+                                    </th>
+                                    <td>
+                                        <span t-field="o.rejected_by"/>
+                                    </td>
+                                    <th>Rejected Date</th>
+                                    <td>
+                                        <span t-field="o.rejected_dt"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div>
+                                <p>
+                                    <b>Employee Signature</b>
+                                    ....................... Date .................
+                                </p>
+
+                            </div>
+                            <div>
+                                <p><b>Department Manager Signature</b>...................... Date..................
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    <b>Approver Signature</b>
+                                    ...................... Date..................
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

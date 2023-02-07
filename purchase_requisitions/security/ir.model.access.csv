@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase.requisitions,access.purchase.requisitions,model_purchase_requisitions,purchase_requisitions.group_employee1,1,1,1,1
+access_purchase.requisitions.line,access.purchase.requisitions.line,model_purchase_requisitions_line,purchase_requisitions.group_employee1,1,1,1,1
+access_purchase1.requisitions,access.purchase1.requisitions,model_purchase_requisitions,purchase_requisitions.group_manager1,1,1,1,1
+access_purchase1.requisitions.line,access.purchase1.requisitions.line,model_purchase_requisitions_line,purchase_requisitions.group_manager1,1,1,1,1
+access_purchase2.requisitions,access.purchase2.requisitions,model_purchase_requisitions,purchase_requisitions.group_user1,1,1,1,1
+access_purchase2.requisitions.line,access.purchase2.requisitions.line,model_purchase_requisitions_line,purchase_requisitions.group_user1,1,1,1,1
